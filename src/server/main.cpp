@@ -120,7 +120,7 @@ void listenToSocket() {
 										}
 										
 										//
-										reply = "<SIZE>" + to_string(read_size);
+										reply = "<RECEIVED>";
 												
 										
 										///   16   ///
