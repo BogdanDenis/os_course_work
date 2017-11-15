@@ -9,11 +9,12 @@ using namespace std;
 				#define _WIN32_WINNT 0x0501 /*Windows XP*/
 		#endif
 		#include <winsock2.h>
-		#include <WS2tcpip.h>
+		
+		#include "ws2tcpip.h"
 
 		#pragma comment(lib, "ws2_32.lib")
 
-		typedef SOCKET int
+		typedef SOCKET int;
 #else
 		#include <sys/socket.h>
 		#include <arpa/inet.h>
@@ -232,9 +233,17 @@ int main () {
 				printf("Could not create socket!");
 		}
 		puts("Socket created");
-		server.sin_addr.s_addr = inet_addr("127.0.0.1");
+		printf("Enter IP and Port to connect to: ");
+		char buff[50];
+		memset(buff, '\0', 50);
+		scanf("%s", buff);
+		string IPP = buff;
+		string IP = IPP.substr(0, IPP.find(":"));
+		string Port = IPP.substr(IPP.find(":") + 1);
+		int port = atoi(Port.c_str());
+		server.sin_addr.s_addr = inet_addr(IP.c_str());
 		server.sin_family = AF_INET;
-		server.sin_port = htons(54000);
+		server.sin_port = htons(port);
 
 		//Connect to remote server
 		if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0) {
